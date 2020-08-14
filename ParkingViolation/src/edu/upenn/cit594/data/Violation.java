@@ -32,6 +32,13 @@ public class Violation {
         + getTicketNo() + " " + getZipcode();
   }
 
+  /**
+   * this method convert of list of string of violation info into a
+   * List<Violation>
+   * 
+   * @param List<String> info
+   * @return List<Violation>
+   */
   public static List<Violation> getListOfViolation(List<String> info) {
     List<Violation> list = new LinkedList<>();
     for (String s : info) {
