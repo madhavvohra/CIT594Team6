@@ -1,9 +1,7 @@
 package edu.upenn.cit594.data;
 
-import java.sql.Timestamp;
-
 public class Violation {
-  private Timestamp timestamp;
+  private String timestamp;
   private int fine;
   private String reason;
   private int plate;
@@ -11,7 +9,7 @@ public class Violation {
   private int ticketNo;
   private int zipcode;
 
-  public Violation(Timestamp timestamp, int fine, String reason, int plate, String state, int ticketNo, int zipcode) {
+  public Violation(String timestamp, int fine, String reason, int plate, String state, int ticketNo, int zipcode) {
     this.timestamp = timestamp;
     this.fine = fine;
     this.reason = reason;
@@ -25,7 +23,7 @@ public class Violation {
     this.ticketNo = ticketNo;
   }
 
-  public Timestamp getTimestamp() {
+  public String getTimestamp() {
     return timestamp;
   }
 
@@ -53,7 +51,7 @@ public class Violation {
     return zipcode;
   }
 
-  public void setTimestamp(Timestamp timestamp) {
+  public void setTimestamp(String timestamp) {
     this.timestamp = timestamp;
   }
 
