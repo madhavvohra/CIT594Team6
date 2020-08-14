@@ -10,9 +10,9 @@ public class Violation {
   private int plate;
   private String state;
   private int ticketNo;
-  private int zipcode;
+  private String zipcode;
 
-  public Violation(String timestamp, int fine, String reason, int plate, String state, int ticketNo, int zipcode) {
+  public Violation(String timestamp, int fine, String reason, int plate, String state, int ticketNo, String zipcode) {
     this.timestamp = timestamp;
     this.fine = fine;
     this.reason = reason;
@@ -55,7 +55,7 @@ public class Violation {
       // System.out.println("state is " + state);
       int ticketNo = Integer.parseInt(split[5]);
       // System.out.println("ticket is " + ticketNo);
-      int zipcode = Integer.parseInt(split[6]);
+      String zipcode = split[6];
       // System.out.println("zip is " + zipcode);
       Violation violation = new Violation(timestamp, fine, reason, plate, state, ticketNo, zipcode);
       // System.out.println("violation object succuessful " + violation.toString());
@@ -88,7 +88,7 @@ public class Violation {
     return ticketNo;
   }
 
-  public int getZipcode() {
+  public String getZipcode() {
     return zipcode;
   }
 
@@ -116,7 +116,7 @@ public class Violation {
     this.ticketNo = ticketNo;
   }
 
-  public void setZipcode(int zipcode) {
+  public void setZipcode(String zipcode) {
     this.zipcode = zipcode;
   }
 

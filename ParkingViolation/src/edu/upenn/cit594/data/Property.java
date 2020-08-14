@@ -1,21 +1,21 @@
 package edu.upenn.cit594.data;
 
 public class Property {
-  private int zipcode;
+  private String zipcode;
   private int marketVal;
   private int livableArea;
 
-  public Property(int zipcode, int marketVal, int livableArea) {
+  public Property(String zipcode, int marketVal, int livableArea) {
     this.livableArea = livableArea;
     this.marketVal = marketVal;
     this.zipcode = zipcode;
   }
 
-  public int getZipcode() {
+  public String getZipcode() {
     return zipcode;
   }
 
-  public void setZipcode(int zipcode) {
+  public void setZipcode(String zipcode) {
     this.zipcode = zipcode;
   }
 
