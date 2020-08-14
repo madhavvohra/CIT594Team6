@@ -1,5 +1,8 @@
 package edu.upenn.cit594.data;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Violation {
   private String timestamp;
   private int fine;
@@ -21,6 +24,37 @@ public class Violation {
 
   public Violation(int ticketNo) {
     this.ticketNo = ticketNo;
+  }
+
+  @Override
+  public String toString() {
+    return getTimestamp() + " " + getFine() + " " + getReason() + " " + getPlate() + " " + getState() + " "
+        + getTicketNo() + " " + getZipcode();
+  }
+
+  public static List<Violation> getListOfViolation(List<String> info) {
+    List<Violation> list = new LinkedList<>();
+    for (String s : info) {
+      String[] split = s.split(",");
+      String timestamp = split[0];
+      // System.out.println("time is " + timestamp);
+      int fine = Integer.parseInt(split[1]);
+      // System.out.println("find is " + fine);
+      String reason = split[2];
+      // System.out.println("reason is " + reason);
+      int plate = Integer.parseInt(split[3]);
+      // System.out.println("plate is " + plate);
+      String state = split[4];
+      // System.out.println("state is " + state);
+      int ticketNo = Integer.parseInt(split[5]);
+      // System.out.println("ticket is " + ticketNo);
+      int zipcode = Integer.parseInt(split[6]);
+      // System.out.println("zip is " + zipcode);
+      Violation violation = new Violation(timestamp, fine, reason, plate, state, ticketNo, zipcode);
+      // System.out.println("violation object succuessful " + violation.toString());
+      list.add(violation);
+    }
+    return list;
   }
 
   public String getTimestamp() {

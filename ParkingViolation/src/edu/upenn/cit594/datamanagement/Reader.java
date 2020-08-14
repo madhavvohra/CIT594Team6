@@ -6,6 +6,6 @@ import java.util.List;
 
 import org.json.simple.parser.ParseException;
 
-public interface Reader<T> {
-  public List<T> getAllInfo() throws FileNotFoundException, IOException, ParseException;
+public interface Reader {
+  public List<String> getAllInfo() throws FileNotFoundException, IOException, ParseException;
 }
