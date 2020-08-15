@@ -1,14 +1,50 @@
 package edu.upenn.cit594.data;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Property {
   private String zipcode;
-  private int marketVal;
-  private int livableArea;
+  private double marketVal;
+  private double livableArea;
 
-  public Property(String zipcode, int marketVal, int livableArea) {
+  public Property(String zipcode, double marketVal, double livableArea) {
     this.livableArea = livableArea;
     this.marketVal = marketVal;
     this.zipcode = zipcode;
+  }
+
+  public static List<Property> getListOfProperty(List<String> info) {
+    List<Property> list = new LinkedList<>();
+    List<String> header = Arrays.asList(info.get(0).split(",", -1));
+    int marketIdx = header.indexOf("market_value");
+    int zipIdx = header.indexOf("zip_code");
+    int areaIdx = header.indexOf("total_livable_area");
+    final String regex = ",(?=(?:[^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)";
+    // todo
+    for (int i = 1; i < info.size() - 581000; i++) {
+      String[] tokens = info.get(i).split(regex, -1);
+      String marketValString = tokens[marketIdx];
+      String zipString = tokens[zipIdx];
+      String livableString = tokens[areaIdx];
+      double marketVal = isValid(marketValString) ? Double.parseDouble(marketValString) : 0;
+      String zipcode = isValid(zipString) ? zipString.substring(0, 5) : "0";
+      double livableArea = isValid(livableString) ? Double.parseDouble(livableString) : 0;
+      Property property = new Property(zipcode, marketVal, livableArea);
+      list.add(property);
+    }
+    return list;
+  }
+
+  /**
+   * check if string s is null or empty or not digit
+   * 
+   * @param s
+   * @return
+   */
+  private static boolean isValid(String s) {
+    return (s == null || s.isBlank() || !s.matches("\\d*\\.?\\-?\\d*\\s*")) ? false : true;
   }
 
   public String getZipcode() {
@@ -19,19 +55,19 @@ public class Property {
     this.zipcode = zipcode;
   }
 
-  public int getMarketVal() {
+  public double getMarketVal() {
     return marketVal;
   }
 
-  public void setMarketVal(int marketVal) {
+  public void setMarketVal(Double marketVal) {
     this.marketVal = marketVal;
   }
 
-  public int getLivableArea() {
+  public double getLivableArea() {
     return livableArea;
   }
 
-  public void setLivableArea(int livableArea) {
+  public void setLivableArea(Double livableArea) {
     this.livableArea = livableArea;
   }
 }
