@@ -4,14 +4,13 @@ import java.util.List;
 
 import edu.upenn.cit594.data.Property;
 
-public class AverageMarketValueCalculator implements AverageCalculator {
+public class AverageMarketValueCalculator implements AverageCalculator{
 
 	// Need to solve for error scenario and truncating decimals
-	// what if there are no properties in the zipCode? Need to solve for this
 
 	@Override
 	public double calculator(String zipCode, List<Property> properties) {
-
+		
 		int totalCount = 0;
 		double sumOfPropertyValue = 0;
 
@@ -29,7 +28,8 @@ public class AverageMarketValueCalculator implements AverageCalculator {
 		else {
 			return sumOfPropertyValue / totalCount;
 		}
-
+		
 	}
 
+	
 }
