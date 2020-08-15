@@ -84,56 +84,35 @@ public class Processor {
   		
   	}
 
-	// NEED TO USE THE STRATEGY PATTERN FOR #3 and #4
+  	/**
+  	 * Calculates the avg of an attribute of the properties in a zipcode 
+  	 * @param zipCode
+  	 * @param properties
+  	 * @param avgCalculator
+  	 * @return
+  	 */
+  	public double average (String zipCode, List<Property> properties, AverageCalculator avgCalculator) {
+		
+  		return avgCalculator.calculator(zipCode, properties);
+  		
+  	}
 	/**
 	 * Prints out the average market value of residences in a specific zip code
 	 * 
 	 * @param zipCode
 	 * @param properties
 	 */
-	public void promptThree(String zipCode, List<Property> properties) {
+	public double promptThree(String zipCode, List<Property> properties) {
 
-		// what is there are no properties in the zipCode? Need to solve for this
-		// scenario
-		int totalCount = 0;
-		double sumOfPropertyValue = 0;
-
-		for (Property property : properties) {
-			if (zipCode.equals(property.getZipcode())) {
-				sumOfPropertyValue = sumOfPropertyValue + property.getMarketVal();
-				totalCount++;
-			}
-		}
-
-		if (totalCount == 0) {
-			System.out.println("0");
-		}
-
-		else {
-			System.out.println(sumOfPropertyValue / totalCount);
-		}
+	
+		return average(zipCode, properties, new AverageMarketValueCalculator());
 
 	}
 
-	public void promptFour(String zipCode, List<Property> properties) {
+	public double promptFour(String zipCode, List<Property> properties) {
 
-		int totalCount = 0;
-		double livableArea = 0;
+		return average(zipCode, properties, new AverageTotalLivableArea());
 
-		for (Property property : properties) {
-			if (zipCode.equals(property.getZipcode())) {
-				livableArea = livableArea + property.getLivableArea();
-				totalCount++;
-			}
-		}
-
-		if (totalCount == 0) {
-			System.out.println("0");
-		}
-
-		else {
-			System.out.println(livableArea / totalCount);
-		}
 	}
 
 	/**
