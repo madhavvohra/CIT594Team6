@@ -29,8 +29,8 @@ public class UserInterface {
 	}
 	
 	/**
-	 * Takes in a double and prints it to the console
-	 * @param doubleToPrint
+	 * Takes in an integer and prints it to the console
+	 * @param integerToPrint
 	 */
 	public void printToScreen(int integerToPrint) {
 		System.out.println(integerToPrint);
