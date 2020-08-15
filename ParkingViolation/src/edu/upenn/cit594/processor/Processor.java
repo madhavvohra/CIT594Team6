@@ -16,11 +16,14 @@ public class Processor {
 	protected List<Property> properties;
 	protected List<Violation> violations;
 	protected List<Population> population;
+	protected Logger logger;
 
-	public Processor(List<Property> properties, List<Violation> violations, List<Population> population) {
+	// Not sure if we need logger here or we can handle it all via main
+	public Processor(List<Property> properties, List<Violation> violations, List<Population> population, Logger logger) {
 		this.population = population;
 		this.properties = properties;
 		this.violations = violations;
+		this.logger = logger;
 	}
 
 	/**
@@ -30,7 +33,7 @@ public class Processor {
 	 * @param zipCodes
 	 */
 	public int promptOne(List<Population> zipCodes) {
-
+		
 		int sum = 0;
 		for (Population zipCode : zipCodes) {
 			sum = sum + zipCode.getPopulation();
@@ -105,7 +108,7 @@ public class Processor {
 	 * @param properties
 	 */
 	public double promptThree(String zipCode, List<Property> properties) {
-
+		
 		return average(zipCode, properties, new AverageMarketValueCalculator());
 
 	}
