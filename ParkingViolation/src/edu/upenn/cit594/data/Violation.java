@@ -46,19 +46,15 @@ public class Violation {
       String timestamp = split[0];
       System.out.println("time is " + timestamp);
       int fine = Integer.parseInt(split[1]);
-      // System.out.println("find is " + fine);
       String reason = split[2];
-      // System.out.println("reason is " + reason);
       int plate = Integer.parseInt(split[3]);
-      // System.out.println("plate is " + plate);
       String state = split[4];
-      // System.out.println("state is " + state);
       int ticketNo = Integer.parseInt(split[5]);
-      // System.out.println("ticket is " + ticketNo);
+      //       
+      //.isBlank() is a method supported since JAVA 11
+      //       
       String zipcode = (split[6] == null || split[6].isBlank()) ? "0" : split[6];
-      // System.out.println("zip is " + zipcode);
       Violation violation = new Violation(timestamp, fine, reason, plate, state, ticketNo, zipcode);
-      // System.out.println("violation object succuessful " + violation.toString());
       list.add(violation);
     }
     return list;
