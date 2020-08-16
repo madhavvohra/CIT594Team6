@@ -44,6 +44,7 @@ public class Property {
    * @return
    */
   private static boolean isValid(String s) {
+    //isBlank() is a method supported by java 11
     return (s == null || s.isBlank() || !s.matches("\\d*\\.?\\-?\\d*\\s*")) ? false : true;
   }
 
