@@ -7,6 +7,7 @@ import edu.upenn.cit594.data.Violation;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeMap;
@@ -85,8 +86,7 @@ public class Processor {
 			}
 		}
 
-		// this can be put into the UI layer and this method can return a Map instead of
-		// being void
+	
 
 		return perCapitaFines;
 
@@ -158,6 +158,48 @@ public class Processor {
 
 		return totalMarketValue / populationInZipCode;
 
+	}
+	
+	/**
+	 * Returns the per capita property value of the PA zipcode with the maximum parking violations
+	 * @param violations
+	 * @param properties
+	 * @param population
+	 * @return
+	 */
+	public double promptSix (List<Violation> violations, List<Property> properties, List<Population> population) {
+		
+		HashMap<String, Integer> violationsPerZipcode = new HashMap<>();
+		
+		for (Violation violation : violations) {
+			if (violation.getState().equals("PA")) {
+				String zipcode = violation.getZipcode();
+				if (violationsPerZipcode.containsKey(zipcode)) {
+					violationsPerZipcode.put(zipcode, violationsPerZipcode.get(zipcode));
+				}
+				else {
+					violationsPerZipcode.put(zipcode, 1);
+				}
+			}
+			
+			
+		}
+		
+        int maxValueInMap = Collections.max(violationsPerZipcode.values());  // Returns max value in the Hashmap
+        String maxValueKey = null;
+        
+        for (Entry<String, Integer> entry : violationsPerZipcode.entrySet()) { 
+            if (entry.getValue() == maxValueInMap) {
+            	maxValueKey = (entry.getKey());   
+            }
+        }
+
+        double perCapitaPropertyValue = promptFive(maxValueKey, properties, population);
+		
+		
+		return perCapitaPropertyValue;
+		
+		
 	}
 
 }
