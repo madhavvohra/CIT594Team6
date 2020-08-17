@@ -35,11 +35,11 @@ public class Processor {
 	 * 
 	 * @param zipCodes
 	 */
-	public int promptOne(List<Population> zipCodes) {
+	public int promptOne() {
 
 		int sum = 0;
-		for (Population zipCode : zipCodes) {
-			sum = sum + zipCode.getPopulation();
+		for (Population pop : population) {
+			sum = sum + pop.getPopulation();
 		}
 
 		return sum;
@@ -48,7 +48,7 @@ public class Processor {
 	/**
 	 * Prints out the total fine per capita for each Zip Code
 	 */
-	public Map promptTwo(List<Violation> violations, List<Population> zipCodes) {
+	public Map promptTwo() {
 
 		// IMPORTANT: Still need to figure out how to show this as four decimal please -
 		// change to double as well
@@ -58,7 +58,8 @@ public class Processor {
 		for (Violation violation : violations) {
 			if (violation.getState().equals("PA")) {
 				if (sumOfFines.containsKey(violation.getZipcode())) {
-					sumOfFines.put(violation.getZipcode(), violation.getFine() + sumOfFines.get(violation.getZipcode()));
+					sumOfFines.put(violation.getZipcode(),
+							violation.getFine() + sumOfFines.get(violation.getZipcode()));
 				} else {
 					if (!violation.getZipcode().equals("0")) {
 						sumOfFines.put(violation.getZipcode(), violation.getFine());
@@ -74,19 +75,18 @@ public class Processor {
 		// iterating through the population list instead of the HashMap so we can
 		// account for the error scenario of zip code not being in the population input
 		// file
-		for (Population zipCode : zipCodes) {
-			if (sumOfFines.containsKey(zipCode.getZipcode())) {
-				perCapitaFines.put(zipCode.getZipcode(), sumOfFines.get(zipCode.getZipcode()) / zipCode.getPopulation()); // need
-																																																									// to
-																																																									// update
-																																																									// to
-																																																									// get
-																																																									// the
+		for (Population pop : population) {
+			if (sumOfFines.containsKey(pop.getZipcode())) {
+				perCapitaFines.put(pop.getZipcode(),
+						sumOfFines.get(pop.getZipcode()) / pop.getPopulation()); // need
+																							// to
+																							// update
+																							// to
+																							// get
+																							// the
 				// population number
 			}
 		}
-
-	
 
 		return perCapitaFines;
 
@@ -112,13 +112,13 @@ public class Processor {
 	 * @param zipCode
 	 * @param properties
 	 */
-	public double promptThree(String zipCode, List<Property> properties) {
+	public double promptThree(String zipCode) {
 
 		return average(zipCode, properties, new AverageMarketValueCalculator());
 
 	}
 
-	public double promptFour(String zipCode, List<Property> properties) {
+	public double promptFour(String zipCode) {
 
 		return average(zipCode, properties, new AverageTotalLivableArea());
 
@@ -132,7 +132,7 @@ public class Processor {
 	 * @param population
 	 * @return
 	 */
-	public double promptFive(String zipCode, List<Property> properties, List<Population> population) {
+	public double promptFive(String zipCode) {
 
 		ArrayList<String> allZipCodes = new ArrayList<>();
 		int populationInZipCode = 0;
@@ -159,47 +159,45 @@ public class Processor {
 		return totalMarketValue / populationInZipCode;
 
 	}
-	
+
 	/**
-	 * Returns the per capita property value of the PA zipcode with the maximum parking violations
+	 * Returns the per capita property value of the PA zipcode with the maximum
+	 * parking violations
+	 * 
 	 * @param violations
 	 * @param properties
 	 * @param population
 	 * @return
 	 */
-	public double promptSix (List<Violation> violations, List<Property> properties, List<Population> population) {
-		
+	public double promptSix() {
+
 		HashMap<String, Integer> violationsPerZipcode = new HashMap<>();
-		
+
 		for (Violation violation : violations) {
 			if (violation.getState().equals("PA")) {
 				String zipcode = violation.getZipcode();
 				if (violationsPerZipcode.containsKey(zipcode)) {
 					violationsPerZipcode.put(zipcode, violationsPerZipcode.get(zipcode));
-				}
-				else {
+				} else {
 					violationsPerZipcode.put(zipcode, 1);
 				}
 			}
-			
-			
-		}
-		
-        int maxValueInMap = Collections.max(violationsPerZipcode.values());  // Returns max value in the Hashmap
-        String maxValueKey = null;
-        
-        for (Entry<String, Integer> entry : violationsPerZipcode.entrySet()) { 
-            if (entry.getValue() == maxValueInMap) {
-            	maxValueKey = (entry.getKey());   
-            }
-        }
 
-        double perCapitaPropertyValue = promptFive(maxValueKey, properties, population);
-		
-		
+		}
+
+		int maxValueInMap = Collections.max(violationsPerZipcode.values()); // Returns max value in the Hashmap
+		String maxValueKey = null;
+
+		for (Entry<String, Integer> entry : violationsPerZipcode.entrySet()) {
+			if (entry.getValue() == maxValueInMap) {
+				maxValueKey = (entry.getKey());
+			}
+		}
+
+		double perCapitaPropertyValue = promptFive(maxValueKey);
+
 		return perCapitaPropertyValue;
-		
-		
+
 	}
 
 }

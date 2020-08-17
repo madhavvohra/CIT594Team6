@@ -2,10 +2,102 @@ package edu.upenn.cit594.ui;
 
 import java.util.Map;
 import java.util.Set;
+
+import edu.upenn.cit594.processor.Processor;
+
 import java.util.Map.Entry;
+import java.util.Scanner;
 
 public class UserInterface {
 
+	protected Processor processor;
+	protected Scanner in;
+	
+	public UserInterface(Processor processor) {
+		this.processor = processor;
+		in = new Scanner(System.in);
+	}
+	
+	public void start() {
+		System.out.println("Welcome to this awesome program. Please enter a number from 1 - 6 to get the answer for the questions below");
+		System.out.println();
+		System.out.println("1: Total Population for all zipcodes");
+		System.out.println("2: Total Fines per Capita for each zipcode");
+		System.out.println("3: Average market value for a zipcode of your choice");
+		System.out.println("4: Average livable area for all residences in a zipcode of your choice");
+		System.out.println("5: Total residential market value per capital for a zipcode of your choice");
+		System.out.println("6: Per capita property valye of the zipcode with the maximum parking violations");
+		
+		int choice = in.nextInt();
+		if (choice == 1) {
+			promptOneDisplay();
+		}
+		else if (choice == 2) {
+			promptTwoDisplay();
+		}
+		else if (choice == 3) {
+			System.out.println("Please enter the zipcode"); // SHOULD WE CHECK FOR ERROR SCENARIO HERE???
+			String zipcode = in.next();
+			promptThreeDisplay(zipcode);
+		}
+		else if (choice == 4) {
+			System.out.println("Please enter the zipcode"); // SHOULD WE CHECK FOR ERROR SCENARIO HERE???
+			String zipcode = in.next();
+			promptFourDisplay(zipcode);
+		}
+		
+		else if (choice == 5) {
+			System.out.println("Please enter the zipcode"); // SHOULD WE CHECK FOR ERROR SCENARIO HERE???
+			String zipcode = in.next();
+			promptFiveDisplay(zipcode);
+		}
+		
+		else if (choice == 6) {
+			promptSixDisplay();
+		}
+		
+		else if (choice == 0) {
+			System.exit(0);
+		}
+		
+		else {
+			System.out.println("You entered an invalid number. Program has terminated");
+			System.exit(0);
+		}
+
+	}
+	
+	public void promptOneDisplay () {
+		int display = processor.promptOne();
+		printToScreen(display);
+	}
+	
+	public void promptTwoDisplay () {
+		Map display = processor.promptTwo();
+		printToScreen(display);
+	}
+	
+	public void promptThreeDisplay (String zipcode) {
+		double display = processor.promptThree(zipcode);
+		printToScreen(display);
+	}
+	
+	public void promptFourDisplay (String zipcode) {
+		double display = processor.promptFour(zipcode);
+		printToScreen(display);
+	}
+	
+	public void promptFiveDisplay (String zipcode) {
+		double display = processor.promptFive(zipcode);
+		printToScreen(display);
+	}
+	
+	public void promptSixDisplay () {
+		double display = processor.promptSix();
+		printToScreen(display);
+	}
+	
+	
 	/**
 	 * Method that takes in a map and prints out the key - value pairs 
 	 * @param numberOfFluTweetsByState
