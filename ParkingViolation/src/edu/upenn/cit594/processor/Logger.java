@@ -54,10 +54,10 @@ public class Logger {
 	/**
 	 * Method that write the time the user made a selection and the user selection
 	 * 
-	 * @param userSelection
+	 * @param choice
 	 */
-	public void logUsersSelection(String userSelection) {
-		out.println(System.currentTimeMillis() + " " + userSelection);
+	public void logUsersSelection(int choice) {
+		out.println(System.currentTimeMillis() + " " + choice);
 		out.flush();
 	}
 

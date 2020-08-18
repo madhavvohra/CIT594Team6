@@ -16,23 +16,18 @@ public class Processor {
 	protected List<Property> properties;
 	protected List<Violation> violations;
 	protected List<Population> population;
-	// protected Logger logger;
-
-	// Not sure if we need logger here or we can handle it all via main
-	// ziwei: handled in main, so the the logger instance variable was removed when
-	// merge.
+	// private Map<Input, Result> results = new HashMap<>(); // for memoization
+	
 	public Processor(List<Property> properties, List<Violation> violations, List<Population> population) {
 		this.population = population;
 		this.properties = properties;
 		this.violations = violations;
-		// this.logger = logger;
 	}
 
 	/**
-	 * Takes in a list of Population objects and prints the total population in all
+	 * Returns the total population in all
 	 * the zip codes
 	 * 
-	 * @param zipCodes
 	 */
 	public int promptOne() {
 
@@ -49,11 +44,8 @@ public class Processor {
 	 */
 	public Map promptTwo() {
 
-		// IMPORTANT: Still need to figure out how to show this as four decimal please -
-		// change to double as well
 
-		HashMap<String, Integer> sumOfFines = new HashMap<>(); // creating HashMap to input the sum of fines in a
-		// zipcode
+		HashMap<String, Integer> sumOfFines = new HashMap<>(); 
 		for (Violation violation : violations) {
 			if (violation.getState().equals("PA")) {
 				if (sumOfFines.containsKey(violation.getZipcode())) {
@@ -77,13 +69,7 @@ public class Processor {
 		for (Population pop : population) {
 			if (sumOfFines.containsKey(pop.getZipcode())) {
 				perCapitaFines.put(pop.getZipcode(),
-						sumOfFines.get(pop.getZipcode()) / pop.getPopulation()); // need
-																							// to
-																							// update
-																							// to
-																							// get
-																							// the
-				// population number
+						sumOfFines.get(pop.getZipcode()) / pop.getPopulation()); 
 			}
 		}
 
