@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Set;
 
+import edu.upenn.cit594.processor.Logger;
 import edu.upenn.cit594.processor.Processor;
 
 import java.util.Map.Entry;
@@ -13,9 +14,11 @@ public class UserInterface {
 
 	protected Processor processor;
 	protected Scanner in;
+	protected String logFileName;
 	
-	public UserInterface(Processor processor) {
+	public UserInterface(Processor processor, String logFileName) {
 		this.processor = processor;
+		this.logFileName = logFileName;
 		in = new Scanner(System.in);
 	}
 	
@@ -29,7 +32,10 @@ public class UserInterface {
 		System.out.println("5: Total residential market value per capital for a zipcode of your choice");
 		System.out.println("6: Per capita property valye of the zipcode with the maximum parking violations");
 		
+		Logger log = Logger.getInstance(logFileName);
 		int choice = in.nextInt();
+		log.logUsersSelection(choice);
+		
 		if (choice == 1) {
 			promptOneDisplay();
 		}
@@ -37,19 +43,22 @@ public class UserInterface {
 			promptTwoDisplay();
 		}
 		else if (choice == 3) {
-			System.out.println("Please enter the zipcode"); // SHOULD WE CHECK FOR ERROR SCENARIO HERE???
+			System.out.println("Please enter the zipcode"); 
 			String zipcode = in.next();
+			log.logZipcodeInputted(zipcode);
 			promptThreeDisplay(zipcode);
 		}
 		else if (choice == 4) {
-			System.out.println("Please enter the zipcode"); // SHOULD WE CHECK FOR ERROR SCENARIO HERE???
+			System.out.println("Please enter the zipcode"); 
 			String zipcode = in.next();
+			log.logZipcodeInputted(zipcode);
 			promptFourDisplay(zipcode);
 		}
 		
 		else if (choice == 5) {
 			System.out.println("Please enter the zipcode"); // SHOULD WE CHECK FOR ERROR SCENARIO HERE???
 			String zipcode = in.next();
+			log.logZipcodeInputted(zipcode);
 			promptFiveDisplay(zipcode);
 		}
 		
