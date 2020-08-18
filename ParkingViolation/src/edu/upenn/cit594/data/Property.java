@@ -18,34 +18,58 @@ public class Property {
   public static List<Property> getListOfProperty(List<String> info) {
     List<Property> list = new LinkedList<>();
     List<String> header = Arrays.asList(info.get(0).split(",", -1));
+    int cols = header.size();
     int marketIdx = header.indexOf("market_value");
     int zipIdx = header.indexOf("zip_code");
     int areaIdx = header.indexOf("total_livable_area");
     final String regex = ",(?=(?:[^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)";
-   
-    for (int i = 1; i < info.size(); i++) {
-      String[] tokens = info.get(i).split(regex, -1);
+    String[] tokens;
+    //TODO
+    for (int i = 1; i < info.size()-50000; i++) {
+    	String row = info.get(i);
+    	tokens = row.split(",", -1);
+    	// if parse by "," result in wrong number of tokens, then parse with regex
+    	if(tokens.length != cols) {
+    		tokens = row.split(regex, -1);   		
+    	}
+//      System.out.println("regex finishes at " + System.currentTimeMillis());
       String marketValString = tokens[marketIdx];
       String zipString = tokens[zipIdx];
       String livableString = tokens[areaIdx];
       double marketVal = isValid(marketValString) ? Double.parseDouble(marketValString) : 0;
-      String zipcode = isValid(zipString) ? zipString.substring(0, 5) : "0";
+//      System.out.println("market " + marketVal);
+      
+      String zipcode = isValidZip(zipString);
+//      System.out.println("zipcode " + zipcode);
       double livableArea = isValid(livableString) ? Double.parseDouble(livableString) : 0;
+//      System.out.println("livable " + livableArea);
       Property property = new Property(zipcode, marketVal, livableArea);
       list.add(property);
     }
+    System.out.println("finished reading");
     return list;
   }
 
   /**
-   * check if string s is null or empty or not digit
+   * check if string s is empty or not digit
    * 
    * @param s
    * @return
    */
   private static boolean isValid(String s) {
-    //isBlank() is a method supported by java 11
-    return (s == null || s.isBlank() || !s.matches("\\d*\\.?\\-?\\d*\\s*")) ? false : true;
+    if(s.isBlank()) return false;
+    if(s.matches("\\d+\\.?\\d*")) return true;
+//    System.out.println(s + " is invalid");
+    return false;
+  }
+  
+  private static String isValidZip(String s) {
+	  if (s.isBlank() || s.length() < 5) {
+		  return "0";
+	  }
+	  String temp = s.substring(0, 5);
+	  if(temp.matches("\\d+")) return temp;
+	  return "0";
   }
 
   public String getZipcode() {

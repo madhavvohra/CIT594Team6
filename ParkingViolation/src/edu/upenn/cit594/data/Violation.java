@@ -51,9 +51,10 @@ public class Violation {
       int ticketNo = Integer.parseInt(split[5]);
       //       
       //.isBlank() is a method supported since JAVA 11
-      //       
-      String zipcode = (split[6] == null || split[6].isBlank()) ? "0" : split[6];
-      Violation violation = new Violation(timestamp, fine, reason, plate, state, ticketNo, zipcode);
+      //
+      String zip = split[6];
+      zip = (zip.isBlank()) ? "0" : zip;
+      Violation violation = new Violation(timestamp, fine, reason, plate, state, ticketNo, zip);
       list.add(violation);
     }
     return list;

@@ -31,7 +31,7 @@ public class Population {
   public static List<Population> getListofPopulation(List<String> info) {
     List<Population> list = new LinkedList<>();
     for (String string : info) {
-      String[] split = string.split("\\s+");
+      String[] split = string.split("\\s+", -1);
       String zip = split[0];
       int pop = Integer.parseInt(split[1]);
       Population population = new Population(zip, pop);

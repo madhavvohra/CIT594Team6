@@ -74,7 +74,11 @@ public class Main {
     }
     csvReader = new CSVReader(propertyInput);
     log.logInputFileOpened(propertyInput);
-    List<Property> properties = Property.getListOfProperty(csvReader.getAllInfo());
+    System.out.println("start reading " + System.currentTimeMillis());
+    List<String> propertyStringList = csvReader.getAllInfo();
+    System.out.println("reading finished " + System.currentTimeMillis());
+    List<Property> properties = Property.getListOfProperty(propertyStringList);
+    System.out.println("parsing finished " + System.currentTimeMillis());
     Reader txtreader = new TXTReader(populationInput);
     log.logInputFileOpened(populationInput);
     List<Population> population = Population.getListofPopulation(txtreader.getAllInfo());
