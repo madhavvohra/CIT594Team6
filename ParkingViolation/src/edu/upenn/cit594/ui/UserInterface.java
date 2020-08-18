@@ -1,5 +1,6 @@
 package edu.upenn.cit594.ui;
 
+import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Set;
 
@@ -107,7 +108,7 @@ public class UserInterface {
 		Set<Entry<String, Integer>> entries = numberOfFluTweetsByState.entrySet();
 		
 		for (Entry<String, Integer> entry : entries) {
-			System.out.println(entry.getKey() + ": " + entry.getValue());
+			System.out.println(entry.getKey() + ": " + new DecimalFormat("#.####").format(entry.getValue()));
 		}
 
 	}
@@ -117,7 +118,7 @@ public class UserInterface {
 	 * @param doubleToPrint
 	 */
 	public void printToScreen(double doubleToPrint) {
-		System.out.println(doubleToPrint);
+		System.out.println(new DecimalFormat("#.####").format(doubleToPrint));
 	}
 	
 	/**

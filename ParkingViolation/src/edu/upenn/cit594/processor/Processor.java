@@ -29,10 +29,9 @@ public class Processor {
 	}
 
 	/**
-	 * Takes in a list of Population objects and prints the total population in all
+	 * Returns the total population in all
 	 * the zip codes
 	 * 
-	 * @param zipCodes
 	 */
 	public int promptOne() {
 
@@ -49,11 +48,8 @@ public class Processor {
 	 */
 	public Map promptTwo() {
 
-		// IMPORTANT: Still need to figure out how to show this as four decimal please -
-		// change to double as well
 
-		HashMap<String, Integer> sumOfFines = new HashMap<>(); // creating HashMap to input the sum of fines in a
-		// zipcode
+		HashMap<String, Integer> sumOfFines = new HashMap<>(); 
 		for (Violation violation : violations) {
 			if (violation.getState().equals("PA")) {
 				if (sumOfFines.containsKey(violation.getZipcode())) {
@@ -77,13 +73,7 @@ public class Processor {
 		for (Population pop : population) {
 			if (sumOfFines.containsKey(pop.getZipcode())) {
 				perCapitaFines.put(pop.getZipcode(),
-						sumOfFines.get(pop.getZipcode()) / pop.getPopulation()); // need
-																							// to
-																							// update
-																							// to
-																							// get
-																							// the
-				// population number
+						sumOfFines.get(pop.getZipcode()) / pop.getPopulation()); 
 			}
 		}
 
