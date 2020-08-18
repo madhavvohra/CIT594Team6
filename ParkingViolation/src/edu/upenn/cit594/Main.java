@@ -21,8 +21,8 @@ import edu.upenn.cit594.ui.UserInterface;
 public class Main {
   public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
     // handle not enough args
-    if (args.length < 4) {
-      System.out.println("no enough file input");
+    if (args.length < 5 || args.length > 5) {
+      System.out.println("wrong number of files");
       System.exit(0);
     }
     // handle args[0] about file format
@@ -79,9 +79,7 @@ public class Main {
     log.logInputFileOpened(populationInput);
     List<Population> population = Population.getListofPopulation(txtreader.getAllInfo());
     Processor processor = new Processor(properties, violations, population);
-
-    // wait for update from UserInterface class.
-    // UserInterface ui = new UserInterface(processor);
-    // ui.Start();
+    UserInterface ui = new UserInterface(processor);
+    ui.start();
   }
 }

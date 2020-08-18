@@ -22,8 +22,8 @@ public class Property {
     int zipIdx = header.indexOf("zip_code");
     int areaIdx = header.indexOf("total_livable_area");
     final String regex = ",(?=(?:[^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)";
-    // todo
-    for (int i = 1; i < info.size() - 581000; i++) {
+   
+    for (int i = 1; i < info.size(); i++) {
       String[] tokens = info.get(i).split(regex, -1);
       String marketValString = tokens[marketIdx];
       String zipString = tokens[zipIdx];

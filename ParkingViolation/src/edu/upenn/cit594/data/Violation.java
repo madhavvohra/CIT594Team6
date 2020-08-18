@@ -44,7 +44,6 @@ public class Violation {
     for (String s : info) {
       String[] split = s.split(",", -1);
       String timestamp = split[0];
-      System.out.println("time is " + timestamp);
       int fine = Integer.parseInt(split[1]);
       String reason = split[2];
       int plate = Integer.parseInt(split[3]);

@@ -33,7 +33,6 @@ public class Population {
     for (String string : info) {
       String[] split = string.split("\\s+");
       String zip = split[0];
-      System.out.println("zip code is " + zip);
       int pop = Integer.parseInt(split[1]);
       Population population = new Population(zip, pop);
       list.add(population);
