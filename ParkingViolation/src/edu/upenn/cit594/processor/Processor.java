@@ -16,16 +16,12 @@ public class Processor {
 	protected List<Property> properties;
 	protected List<Violation> violations;
 	protected List<Population> population;
-	// protected Logger logger;
-
-	// Not sure if we need logger here or we can handle it all via main
-	// ziwei: handled in main, so the the logger instance variable was removed when
-	// merge.
+	// private Map<Input, Result> results = new HashMap<>(); // for memoization
+	
 	public Processor(List<Property> properties, List<Violation> violations, List<Population> population) {
 		this.population = population;
 		this.properties = properties;
 		this.violations = violations;
-		// this.logger = logger;
 	}
 
 	/**

@@ -79,7 +79,7 @@ public class Main {
     log.logInputFileOpened(populationInput);
     List<Population> population = Population.getListofPopulation(txtreader.getAllInfo());
     Processor processor = new Processor(properties, violations, population);
-    UserInterface ui = new UserInterface(processor);
+    UserInterface ui = new UserInterface(processor, logName);
     ui.start();
   }
 }
