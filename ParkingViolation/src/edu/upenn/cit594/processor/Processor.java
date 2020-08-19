@@ -6,9 +6,9 @@ import edu.upenn.cit594.data.Violation;
 
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
@@ -119,7 +119,7 @@ public class Processor {
 	 */
 	public double promptFive(String zipCode) {
 
-		ArrayList<String> allZipCodes = new ArrayList<>();
+		LinkedList<String> allZipCodes = new LinkedList<>(); 
 		int populationInZipCode = 0;
 
 		for (Population pop : population) {
