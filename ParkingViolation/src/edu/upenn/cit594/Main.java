@@ -21,7 +21,7 @@ import edu.upenn.cit594.ui.UserInterface;
 public class Main {
   public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
     // handle not enough args
-    if (args.length < 5 || args.length > 5) {
+    if (args.length != 5) {
       System.out.println("wrong number of files");
       System.exit(0);
     }
@@ -60,28 +60,27 @@ public class Main {
     }
 
     // set up relationships
-    Reader csvReader;
+    Reader csvReader = new CSVReader();
     Logger log = Logger.getInstance(logName);
     List<Violation> violations;
     if (format.equals("csv")) {
-      csvReader = new CSVReader(parkingInput);
       log.logInputFileOpened(parkingInput);
-      violations = Violation.getListOfViolation(csvReader.getAllInfo());
+      violations = Violation.getListOfViolation(csvReader.getAllInfo(parkingInput));
     } else {
-      Reader jsonReader = new JSONReader(parkingInput);
+      Reader jsonReader = new JSONReader();
       log.logInputFileOpened(parkingInput);
-      violations = Violation.getListOfViolation(jsonReader.getAllInfo());
+      violations = Violation.getListOfViolation(jsonReader.getAllInfo(parkingInput));
     }
-    csvReader = new CSVReader(propertyInput);
     log.logInputFileOpened(propertyInput);
-    System.out.println("start reading " + System.currentTimeMillis());
-    List<String> propertyStringList = csvReader.getAllInfo();
-    System.out.println("reading finished " + System.currentTimeMillis());
+    // System.out.println("start reading " + System.currentTimeMillis());
+    List<String> propertyStringList = csvReader.getAllInfo(propertyInput);
+    // long startT = System.nanoTime();
     List<Property> properties = Property.getListOfProperty(propertyStringList);
-    System.out.println("parsing finished " + System.currentTimeMillis());
-    Reader txtreader = new TXTReader(populationInput);
+    // long finishT = System.nanoTime();
+    // System.out.println("total time took " + (finishT - startT));
+    Reader txtreader = new TXTReader();
     log.logInputFileOpened(populationInput);
-    List<Population> population = Population.getListofPopulation(txtreader.getAllInfo());
+    List<Population> population = Population.getListofPopulation(txtreader.getAllInfo(populationInput));
     Processor processor = new Processor(properties, violations, population);
     UserInterface ui = new UserInterface(processor, logName);
     ui.start();

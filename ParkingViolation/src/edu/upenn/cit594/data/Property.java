@@ -1,98 +1,157 @@
 package edu.upenn.cit594.data;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Property {
-  private String zipcode;
-  private double marketVal;
-  private double livableArea;
+	private String zipcode;
+	private double marketVal;
+	private double livableArea;
 
-  public Property(String zipcode, double marketVal, double livableArea) {
-    this.livableArea = livableArea;
-    this.marketVal = marketVal;
-    this.zipcode = zipcode;
-  }
+	public Property(String zipcode, double marketVal, double livableArea) {
+		this.livableArea = livableArea;
+		this.marketVal = marketVal;
+		this.zipcode = zipcode;
+	}
 
-  public static List<Property> getListOfProperty(List<String> info) {
-    List<Property> list = new LinkedList<>();
-    List<String> header = Arrays.asList(info.get(0).split(",", -1));
-    int cols = header.size();
-    int marketIdx = header.indexOf("market_value");
-    int zipIdx = header.indexOf("zip_code");
-    int areaIdx = header.indexOf("total_livable_area");
-    final String regex = ",(?=(?:[^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)";
-    String[] tokens;
-    //TODO
-    for (int i = 1; i < info.size()-50000; i++) {
-    	String row = info.get(i);
-    	tokens = row.split(",", -1);
-    	// if parse by "," result in wrong number of tokens, then parse with regex
-    	if(tokens.length != cols) {
-    		tokens = row.split(regex, -1);   		
-    	}
-//      System.out.println("regex finishes at " + System.currentTimeMillis());
-      String marketValString = tokens[marketIdx];
-      String zipString = tokens[zipIdx];
-      String livableString = tokens[areaIdx];
-      double marketVal = isValid(marketValString) ? Double.parseDouble(marketValString) : 0;
-//      System.out.println("market " + marketVal);
-      
-      String zipcode = isValidZip(zipString);
-//      System.out.println("zipcode " + zipcode);
-      double livableArea = isValid(livableString) ? Double.parseDouble(livableString) : 0;
-//      System.out.println("livable " + livableArea);
-      Property property = new Property(zipcode, marketVal, livableArea);
-      list.add(property);
-    }
-    System.out.println("finished reading");
-    return list;
-  }
+	/**
+	 * this method using regex is too slow
+	 * 
+	 * @param info
+	 * @return
+	 */
+	public static List<Property> getListOfProperty1(List<String> info) {
+		List<Property> list = new LinkedList<>();
+		List<String> header = Arrays.asList(info.get(0).split(",", -1));
+		int cols = header.size();
+		int marketIdx = header.indexOf("market_value");
+		int zipIdx = header.indexOf("zip_code");
+		int areaIdx = header.indexOf("total_livable_area");
+		final String regex = ",(?=(?:[^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)";
+		String[] tokens;
 
-  /**
-   * check if string s is empty or not digit
-   * 
-   * @param s
-   * @return
-   */
-  private static boolean isValid(String s) {
-    if(s.isBlank()) return false;
-    if(s.matches("\\d+\\.?\\d*")) return true;
-//    System.out.println(s + " is invalid");
-    return false;
-  }
-  
-  private static String isValidZip(String s) {
-	  if (s.isBlank() || s.length() < 5) {
-		  return "0";
-	  }
-	  String temp = s.substring(0, 5);
-	  if(temp.matches("\\d+")) return temp;
-	  return "0";
-  }
+		for (int i = 1; i < info.size() - 50000; i++) {
+			String row = info.get(i);
+			tokens = row.split(",", -1);
+			// if parse by "," result in wrong number of tokens, then parse with regex
+			if (tokens.length != cols) {
+				tokens = row.split(regex, -1);
+			}
+			// System.out.println("regex finishes at " + System.currentTimeMillis());
+			String marketValString = tokens[marketIdx];
+			String zipString = tokens[zipIdx];
+			String livableString = tokens[areaIdx];
+			double marketVal = isValid(marketValString);
+			String zipcode = isValidZip(zipString);
+			double livableArea = isValid(livableString);
+			Property property = new Property(zipcode, marketVal, livableArea);
+			list.add(property);
+		}
+		System.out.println("finished reading");
+		return list;
+	}
 
-  public String getZipcode() {
-    return zipcode;
-  }
+	/**
+	 * this method return a list of <Property> from a list of String
+	 * 
+	 * @param info List<String>
+	 * @return
+	 */
+	public static List<Property> getListOfProperty(List<String> info) {
+		List<Property> propertiesList = new LinkedList<>();
 
-  public void setZipcode(String zipcode) {
-    this.zipcode = zipcode;
-  }
+		List<String> header = Arrays.asList(info.get(0).split(",", -1));
+		int marketIdx = header.indexOf("market_value");
+		int zipIdx = header.indexOf("zip_code");
+		int areaIdx = header.indexOf("total_livable_area");
 
-  public double getMarketVal() {
-    return marketVal;
-  }
+		List<String> tokensList = new ArrayList<String>();
+		StringBuilder foundString = new StringBuilder();
+		boolean inQuotes = false;
+		for (int i = 1; i < info.size() - 500000; i++) {
+			tokensList.clear();
+			String tested = info.get(i);
+			for (char c : tested.toCharArray()) {
+				switch (c) {
+				case ',':
+					if (inQuotes) {
+						foundString.append(c);
+					} else {
+						tokensList.add(foundString.toString());
+						foundString.setLength(0);
+						;
+					}
+					break;
+				case '"':
+					inQuotes = !inQuotes;
+				default:
+					foundString.append(c);
+				}
+			}
+			tokensList.add(foundString.toString());
+			double marketVal = isValid(tokensList.get(marketIdx));
+			String zipcode = isValidZip(tokensList.get(zipIdx));
+			double livableArea = isValid(tokensList.get(areaIdx));
+			Property property = new Property(zipcode, marketVal, livableArea);
+			propertiesList.add(property);
+		}
+		return propertiesList;
+	}
 
-  public void setMarketVal(Double marketVal) {
-    this.marketVal = marketVal;
-  }
+	/**
+	 * validate string, return value in double
+	 * 
+	 * @param String s
+	 * @return Double
+	 */
+	private static Double isValid(String s) {
+		if (s.isBlank())
+			return 0.0;
+		if (s.matches("\\d+\\.?\\d*"))
+			return Double.parseDouble(s);
+		// System.out.println(s + " is invalid");
+		return 0.0;
+	}
 
-  public double getLivableArea() {
-    return livableArea;
-  }
+	/**
+	 * validate zipcode input, if matches, return substring, if not return 0
+	 * 
+	 * @param String
+	 * @return String
+	 */
+	private static String isValidZip(String s) {
+		if (s.isBlank() || s.length() < 5) {
+			return "0";
+		}
+		String temp = s.substring(0, 5);
+		if (temp.matches("\\d+"))
+			return temp;
+		return "0";
+	}
 
-  public void setLivableArea(Double livableArea) {
-    this.livableArea = livableArea;
-  }
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	public double getMarketVal() {
+		return marketVal;
+	}
+
+	public void setMarketVal(Double marketVal) {
+		this.marketVal = marketVal;
+	}
+
+	public double getLivableArea() {
+		return livableArea;
+	}
+
+	public void setLivableArea(Double livableArea) {
+		this.livableArea = livableArea;
+	}
 }

@@ -10,17 +10,15 @@ import java.util.List;
 import org.json.simple.parser.ParseException;
 
 public class CSVReader implements Reader {
-  protected String fileName;
 
-  public CSVReader(String fileName) {
-    this.fileName = fileName;
+  public CSVReader() {
   }
 
   /**
    * return a list of string of violation info
    */
   @Override
-  public List<String> getAllInfo() throws FileNotFoundException, IOException, ParseException {
+  public List<String> getAllInfo(String fileName) throws FileNotFoundException, IOException, ParseException {
     BufferedReader reader = new BufferedReader(new FileReader(fileName));
     String line;
     List<String> list = new LinkedList<>();

@@ -10,14 +10,8 @@ import java.util.List;
 import org.json.simple.parser.ParseException;
 
 public class TXTReader implements Reader {
-  protected String filename;
-
-  public TXTReader(String filename) {
-    this.filename = filename;
-  }
-
   @Override
-  public List<String> getAllInfo() throws FileNotFoundException, IOException, ParseException {
+  public List<String> getAllInfo(String filename) throws FileNotFoundException, IOException, ParseException {
     List<String> list = new LinkedList<>();
     BufferedReader reader = new BufferedReader(new FileReader(filename));
     String line;

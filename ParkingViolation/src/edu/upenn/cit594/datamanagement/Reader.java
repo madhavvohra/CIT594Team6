@@ -7,5 +7,5 @@ import java.util.List;
 import org.json.simple.parser.ParseException;
 
 public interface Reader {
-  public List<String> getAllInfo() throws FileNotFoundException, IOException, ParseException;
+  public List<String> getAllInfo(String filename) throws FileNotFoundException, IOException, ParseException;
 }
