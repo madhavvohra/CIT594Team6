@@ -70,24 +70,23 @@ public class Property {
 		List<String> tokensList = new ArrayList<String>();
 		StringBuilder foundString = new StringBuilder();
 		boolean inQuotes = false;
-		for (int i = 1; i < info.size() - 500000; i++) {
+		for (int i = 1; i < info.size(); i++) {
 			tokensList.clear();
 			String tested = info.get(i);
 			for (char c : tested.toCharArray()) {
 				switch (c) {
-				case ',':
-					if (inQuotes) {
+					case ',':
+						if (inQuotes) {
+							foundString.append(c);
+						} else {
+							tokensList.add(foundString.toString());
+							foundString.setLength(0);
+						}
+						break;
+					case '"':
+						inQuotes = !inQuotes;
+					default:
 						foundString.append(c);
-					} else {
-						tokensList.add(foundString.toString());
-						foundString.setLength(0);
-						;
-					}
-					break;
-				case '"':
-					inQuotes = !inQuotes;
-				default:
-					foundString.append(c);
 				}
 			}
 			tokensList.add(foundString.toString());

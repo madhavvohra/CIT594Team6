@@ -74,10 +74,10 @@ public class Main {
     log.logInputFileOpened(propertyInput);
     // System.out.println("start reading " + System.currentTimeMillis());
     List<String> propertyStringList = csvReader.getAllInfo(propertyInput);
-    // long startT = System.nanoTime();
+    long startT = System.nanoTime();
     List<Property> properties = Property.getListOfProperty(propertyStringList);
-    // long finishT = System.nanoTime();
-    // System.out.println("total time took " + (finishT - startT));
+    long finishT = System.nanoTime();
+    System.out.println("total time took " + (finishT - startT));
     Reader txtreader = new TXTReader();
     log.logInputFileOpened(populationInput);
     List<Population> population = Population.getListofPopulation(txtreader.getAllInfo(populationInput));
