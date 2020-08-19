@@ -1,5 +1,6 @@
 package edu.upenn.cit594.data;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class Violation {
    * @return List<Violation>
    */
   public static List<Violation> getListOfViolation(List<String> info) {
-    List<Violation> list = new LinkedList<>();
+    List<Violation> list = new ArrayList<>();
     for (String s : info) {
       String[] split = s.split(",", -1);
       String timestamp = split[0];
@@ -49,8 +50,8 @@ public class Violation {
       int plate = Integer.parseInt(split[3]);
       String state = split[4];
       int ticketNo = Integer.parseInt(split[5]);
-      //       
-      //.isBlank() is a method supported since JAVA 11
+      //
+      // .isBlank() is a method supported since JAVA 11
       //
       String zip = split[6];
       zip = (zip.isBlank()) ? "0" : zip;

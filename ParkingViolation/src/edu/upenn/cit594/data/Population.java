@@ -1,5 +1,6 @@
 package edu.upenn.cit594.data;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class Population {
   }
 
   public static List<Population> getListofPopulation(List<String> info) {
-    List<Population> list = new LinkedList<>();
+    List<Population> list = new ArrayList<>();
     for (String string : info) {
       String[] split = string.split("\\s+", -1);
       String zip = split[0];

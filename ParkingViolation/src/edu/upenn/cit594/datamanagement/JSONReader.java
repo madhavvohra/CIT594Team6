@@ -3,6 +3,7 @@ package edu.upenn.cit594.datamanagement;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class JSONReader implements Reader {
     JSONParser parser = new JSONParser();
     JSONArray violations = (JSONArray) parser.parse(new FileReader(filename));
     Iterator iterator = violations.iterator();
-    List<String> listOfViolations = new LinkedList<>();
+    List<String> listOfViolations = new ArrayList<>();
 
     while (iterator.hasNext()) {
       JSONObject eachViolation = (JSONObject) iterator.next();

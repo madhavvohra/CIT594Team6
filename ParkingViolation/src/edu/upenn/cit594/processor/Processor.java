@@ -16,8 +16,7 @@ public class Processor {
 	protected List<Property> properties;
 	protected List<Violation> violations;
 	protected List<Population> population;
-	// private Map<Input, Result> results = new HashMap<>(); // for memoization
-	
+
 	public Processor(List<Property> properties, List<Violation> violations, List<Population> population) {
 		this.population = population;
 		this.properties = properties;
@@ -25,8 +24,7 @@ public class Processor {
 	}
 
 	/**
-	 * Returns the total population in all
-	 * the zip codes
+	 * Returns the total population in all the zip codes
 	 * 
 	 */
 	public int promptOne() {
@@ -42,15 +40,13 @@ public class Processor {
 	/**
 	 * Prints out the total fine per capita for each Zip Code
 	 */
-	public Map promptTwo() {
+	public Map<String, Integer> promptTwo() {
 
-
-		HashMap<String, Integer> sumOfFines = new HashMap<>(); 
+		HashMap<String, Integer> sumOfFines = new HashMap<>();
 		for (Violation violation : violations) {
 			if (violation.getState().equals("PA")) {
 				if (sumOfFines.containsKey(violation.getZipcode())) {
-					sumOfFines.put(violation.getZipcode(),
-							violation.getFine() + sumOfFines.get(violation.getZipcode()));
+					sumOfFines.put(violation.getZipcode(), violation.getFine() + sumOfFines.get(violation.getZipcode()));
 				} else {
 					if (!violation.getZipcode().equals("0")) {
 						sumOfFines.put(violation.getZipcode(), violation.getFine());
@@ -68,8 +64,7 @@ public class Processor {
 		// file
 		for (Population pop : population) {
 			if (sumOfFines.containsKey(pop.getZipcode())) {
-				perCapitaFines.put(pop.getZipcode(),
-						sumOfFines.get(pop.getZipcode()) / pop.getPopulation()); 
+				perCapitaFines.put(pop.getZipcode(), sumOfFines.get(pop.getZipcode()) / pop.getPopulation());
 			}
 		}
 
@@ -119,7 +114,7 @@ public class Processor {
 	 */
 	public double promptFive(String zipCode) {
 
-		LinkedList<String> allZipCodes = new LinkedList<>(); 
+		LinkedList<String> allZipCodes = new LinkedList<>();
 		int populationInZipCode = 0;
 
 		for (Population pop : population) {

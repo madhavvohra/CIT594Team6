@@ -17,50 +17,13 @@ public class Property {
 	}
 
 	/**
-	 * this method using regex is too slow
-	 * 
-	 * @param info
-	 * @return
-	 */
-	public static List<Property> getListOfProperty1(List<String> info) {
-		List<Property> list = new LinkedList<>();
-		List<String> header = Arrays.asList(info.get(0).split(",", -1));
-		int cols = header.size();
-		int marketIdx = header.indexOf("market_value");
-		int zipIdx = header.indexOf("zip_code");
-		int areaIdx = header.indexOf("total_livable_area");
-		final String regex = ",(?=(?:[^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)";
-		String[] tokens;
-
-		for (int i = 1; i < info.size() - 50000; i++) {
-			String row = info.get(i);
-			tokens = row.split(",", -1);
-			// if parse by "," result in wrong number of tokens, then parse with regex
-			if (tokens.length != cols) {
-				tokens = row.split(regex, -1);
-			}
-			// System.out.println("regex finishes at " + System.currentTimeMillis());
-			String marketValString = tokens[marketIdx];
-			String zipString = tokens[zipIdx];
-			String livableString = tokens[areaIdx];
-			double marketVal = isValid(marketValString);
-			String zipcode = isValidZip(zipString);
-			double livableArea = isValid(livableString);
-			Property property = new Property(zipcode, marketVal, livableArea);
-			list.add(property);
-		}
-		System.out.println("finished reading");
-		return list;
-	}
-
-	/**
 	 * this method return a list of <Property> from a list of String
 	 * 
 	 * @param info List<String>
 	 * @return
 	 */
 	public static List<Property> getListOfProperty(List<String> info) {
-		List<Property> propertiesList = new LinkedList<>();
+		List<Property> propertiesList = new ArrayList<>();
 
 		List<String> header = Arrays.asList(info.get(0).split(",", -1));
 		int marketIdx = header.indexOf("market_value");
@@ -97,6 +60,43 @@ public class Property {
 			propertiesList.add(property);
 		}
 		return propertiesList;
+	}
+
+	/**
+	 * this method using regex is too slow
+	 * 
+	 * @param info
+	 * @return
+	 */
+	public static List<Property> getListOfProperty2(List<String> info) {
+		List<Property> list = new LinkedList<>();
+		List<String> header = Arrays.asList(info.get(0).split(",", -1));
+		int cols = header.size();
+		int marketIdx = header.indexOf("market_value");
+		int zipIdx = header.indexOf("zip_code");
+		int areaIdx = header.indexOf("total_livable_area");
+		final String regex = ",(?=(?:[^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)";
+		String[] tokens;
+
+		for (int i = 1; i < info.size(); i++) {
+			String row = info.get(i);
+			tokens = row.split(",", -1);
+			// if parse by "," result in wrong number of tokens, then parse with regex
+			if (tokens.length != cols) {
+				tokens = row.split(regex, -1);
+			}
+			// System.out.println("regex finishes at " + System.currentTimeMillis());
+			String marketValString = tokens[marketIdx];
+			String zipString = tokens[zipIdx];
+			String livableString = tokens[areaIdx];
+			double marketVal = isValid(marketValString);
+			String zipcode = isValidZip(zipString);
+			double livableArea = isValid(livableString);
+			Property property = new Property(zipcode, marketVal, livableArea);
+			list.add(property);
+		}
+		System.out.println("finished reading");
+		return list;
 	}
 
 	/**
